@@ -1,2 +1,1 @@
-# ruby-connect-four
-# ruby-connect-four
+# Connect Four in Ruby via TDD for The Odin Project
