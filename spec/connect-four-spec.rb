@@ -23,7 +23,8 @@ describe ConnectFour do
 
   describe '#valid?' do
     context 'when a valid number is provided' do
-      it { is_expected. (connectfour.valid?(4)).to be true
+      it 'returns true' do
+        expect (connectfour.valid?(4)).to be true
       end
     end
 
