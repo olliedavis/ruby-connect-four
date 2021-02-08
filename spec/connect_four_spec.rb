@@ -68,10 +68,6 @@ describe ConnectFour do
     end
 
     context 'when a line of four has not been made' do
-      before do
-        connectfour.row_six = [' ', ' O', 'X', 'X', 'X', 'O ', ' ']
-      end
-
       it 'returns false' do
         expect(connectfour.won?).to be false
       end
