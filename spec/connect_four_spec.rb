@@ -3,7 +3,7 @@ require '../lib/connect-four'
 describe ConnectFour do
   subject(:connectfour) { described_class.new }
 
-  describe 'input_to_index' do
+  describe '#input_to_index' do
     context 'when an input is provided' do
       it 'converts to matching index' do
         expect (connectfour.input_to_index(4)).to eq(5)
@@ -74,6 +74,29 @@ describe ConnectFour do
 
       it 'returns false' do
         expect(connectfour.won?).to be false
+      end
+    end
+  end
+
+  describe '#full_board?' do
+    context 'when there are no positions left' do
+      before do
+        connectfour.row_one = ['O'] * 7
+        connectfour.row_two = ['O'] * 7
+        connectfour.row_three = ['O'] * 7
+        connectfour.row_four = ['O'] * 7
+        connectfour.row_five = ['O'] * 7
+        connectfour.row_six = ['O'] * 7
+      end
+
+      it 'returns true' do
+        expect(connectfour.full_board?).to be true
+      end
+    end
+
+    context 'when there are positions left' do
+      it 'returns false' do
+        expect(connectfour.full_board?).to be false
       end
     end
   end
