@@ -1,4 +1,4 @@
-require '../lib/connect-four'
+require_relative '../lib/connect_four'
 
 describe ConnectFour do
   subject(:connectfour) { described_class.new }
