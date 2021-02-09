@@ -3,10 +3,18 @@ require_relative 'gameboard'
 class ConnectFour
   def initialize
     @board = Gameboard.new
+    #play
   end
 
-  def input_to_index(int)
-    int - 1
+  def player_input
+    #puts "Player #{player_number}, please enter the number of the column of where you would like to drop your token"
+    input = gets.chomp.to_i - 1
+
+    until valid?(input)
+      puts "Invalid input, please enter the number of the column of where you would like to drop your token"
+      input = gets.chomp.to_i - 1
+    end
+    input
   end
 
   def valid?(int)
