@@ -8,7 +8,7 @@ describe ConnectFour do
   describe '#input_to_index' do
     context 'when an input is provided' do
       it 'converts to matching index' do
-        expect (connectfour.input_to_index(4)).to eq(5)
+        expect(connectfour.input_to_index(4)).to eq(3)
       end
     end
   end
