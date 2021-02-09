@@ -1,5 +1,9 @@
-class Board
+class Gameboard
   def initialize
+    board
+  end
+
+  def board
     @row_one = [' '] * 7
     @row_two = [' '] * 7
     @row_three = [' '] * 7

@@ -1,7 +1,9 @@
 require_relative '../lib/connect_four'
+require_relative '../lib/board'
 
 describe ConnectFour do
   subject(:connectfour) { described_class.new }
+  subject(:board) { gameboard.new }
 
   describe '#input_to_index' do
     context 'when an input is provided' do
@@ -77,12 +79,12 @@ describe ConnectFour do
   describe '#full_board?' do
     context 'when there are no positions left' do
       before do
-        connectfour.row_one = ['O'] * 7
-        connectfour.row_two = ['O'] * 7
-        connectfour.row_three = ['O'] * 7
-        connectfour.row_four = ['O'] * 7
-        connectfour.row_five = ['O'] * 7
-        connectfour.row_six = ['O'] * 7
+        gameboard.board.row_one = ['O'] * 7
+        gameboard.board.row_two = ['O'] * 7
+        gameboard.board.row_three = ['O'] * 7
+        gameboard.board.row_four = ['O'] * 7
+        gameboard.board.row_five = ['O'] * 7
+        gameboard.board.row_six = ['O'] * 7
       end
 
       it 'returns true' do
@@ -93,6 +95,14 @@ describe ConnectFour do
     context 'when there are positions left' do
       it 'returns false' do
         expect(connectfour.full_board?).to be false
+      end
+    end
+  end
+
+  describe '#current_board' do
+    context 'when called' do
+      it 'returns the current board' do
+        expect(board.current_board).to receive(:current_board)
       end
     end
   end
