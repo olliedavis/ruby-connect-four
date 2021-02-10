@@ -6,7 +6,7 @@ describe ConnectFour do
   subject(:board) { gameboard.new }
 
   describe '#player_input' do
-    context 'when an input is provided' do
+    context 'when a valid input is provided' do
       before do
         allow(connectfour).to receive(:gets).and_return('4')
       end
@@ -14,6 +14,17 @@ describe ConnectFour do
       it 'validates and returns correct index' do
         result = connectfour.player_input
         expect(result).to eq(3)
+      end
+    end
+
+    context 'when an invalid input is provided twice and then a valid input' do
+      before do
+        allow(connectfour).to receive(:gets).and_return('foo', 'bar', '5')
+      end
+
+      it 'validates and returns the correct index' do
+        result = connectfour.player_input
+        expect(result).to eq(4)
       end
     end
   end

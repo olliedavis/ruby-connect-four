@@ -12,3 +12,4 @@ class Gameboard
     @row_six = [' '] * 7
   end
 end
+
