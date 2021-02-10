@@ -9,11 +9,12 @@ class Gameboard
     @row_three = [' '] * 7
     @row_four = [' '] * 7
     @row_five = [' '] * 7
-    @row_six = [' x'] * 7
+    @row_six = [' '] * 7
   end
 
   def counter_drop(column, player)
-    
+    position = counter_drop_position(column)
+    position[column] = player
   end
 
   def counter_drop_position(column)
@@ -33,5 +34,3 @@ class Gameboard
     end
   end
 end
-
-

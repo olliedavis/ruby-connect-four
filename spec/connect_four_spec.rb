@@ -43,24 +43,6 @@ describe ConnectFour do
     end
   end
 
-  describe '#counter_drop' do
-    context 'when an empty column is chosen' do
-      xit 'puts the piece in the lowest position' do
-        expect(connectfour.counter_drop(0, 'O')).to change { connectfour.row_six[0] }.from (' ').to('O')
-      end
-    end
-
-    context 'when a non-empty column is chosen' do
-      before do
-        row_six[3] = 'O'
-      end
-
-      xit 'puts the piece at the lowest available position' do
-        expect(connectfour.counter_drop(3, 'O')).to change { connectfour.row_five[3] }.from (' ').to('O')
-      end
-    end
-  end
-
   describe '#won?' do
     context 'when a straight line of four is made' do
       before do
