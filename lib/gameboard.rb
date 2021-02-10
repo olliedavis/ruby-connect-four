@@ -33,4 +33,17 @@ class Gameboard
       @row_one
     end
   end
+
+  def full_board?
+    if @row_one.include?(' ') == false &&
+       @row_two.include?(' ') == false &&
+       @row_three.include?(' ') == false &&
+       @row_four.include?(' ') == false &&
+       @row_five.include?(' ') == false &&
+       @row_six.include?(' ') == false
+      true
+    else
+      false
+    end
+  end
 end
