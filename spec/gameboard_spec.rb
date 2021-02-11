@@ -65,13 +65,13 @@ describe Gameboard do
         board.instance_variable_set(:@row_six, ['O|'] * 7)
       end
 
-      it 'returns true' do
+      xit 'returns true' do
         expect(board.full_board?).to be true
       end
     end
 
     context 'when there are positions left' do
-      it 'returns false' do
+      xit 'returns false' do
         expect(board.full_board?).to be false
       end
     end

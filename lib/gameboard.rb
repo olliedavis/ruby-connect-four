@@ -1,6 +1,7 @@
 class Gameboard
   def initialize
     board
+    @empty_space = ' |'
   end
 
   def board
@@ -10,7 +11,7 @@ class Gameboard
       @row_three = [' |'] * 7,
       @row_four = [' |'] * 7,
       @row_five = [' |'] * 7,
-      @row_six = [' |'] * 7,
+      @row_six = [' |'] * 7
     ]
   end
 
@@ -27,7 +28,7 @@ class Gameboard
   end
 
   def counter_drop_position(column)
-    case ' |'
+    case @empty_space
     when @row_six[column]
       @row_six
     when @row_five[column]
@@ -48,25 +49,30 @@ class Gameboard
     @board_array.each do |row|
       full_row += 1 if row.include?(' |') == false
     end
-    full_row == 6 ? true : false
+    true if full_row == 6
   end
 
   def won_straight_line?
-    @board_array.each do |arr|
-      arr.each_with_index do |int, idx|
-        int[idx] == int[idx + 1] && int[idx] == int[idx + 2] && int[idx] == int[idx + 3] ? true : false
+    @board_array.each do |row|
+      row.reverse.each_with_index do |int, idx|
+        int[idx] != @empty_space && int[idx] == int[idx + 1] && int[idx] == int[idx + 2] && int[idx] == int[idx + 3] ? true : false
       end
     end
   end
 
   def won_diagonal?
-    @board_array.each_with_index do |row, row_idx|
+    correct_counter = 0
+    @board_array.reverse.each_with_index do |row, row_idx|
       row.each_with_index do |col, col_idx|
-        col[col_idx] == row[row_idx + 1][col[col_idx +1]] ? true : false
+        if col[col_idx] != @empty_space && col[col_idx] == row[row_idx + 1][col[col_idx + 1]]
+          correct_counter += 1
+        else
+          correct_counter = 0
+        end
       end
     end
+    true if correct_counter == 4
   end
 end
 
-#notes:
-#need to amend won methods as current empty array counts as matching the next iteration in array
+#
