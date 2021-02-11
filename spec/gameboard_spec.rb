@@ -1,9 +1,11 @@
 require_relative '../lib/gameboard'
+require_relative '../lib/connect_four'
 
 describe Gameboard do
   subject(:board) { described_class.new }
+  subject(:connectfour) { ConnectFour.new }
 
-  describe '#counter_drop' do
+  describe '#self.counter_drop' do
     context 'when an empty column is chosen' do
       it 'puts the piece in the lowest position' do
         expect { board.counter_drop(0, 'O|') }.to change { board.instance_variable_get(:@row_six)[0] }.from(' |').to('O|')
@@ -24,10 +26,10 @@ describe Gameboard do
   describe '#won?' do
     context 'when a straight line of four is made' do
       before do
-        board.row_six = [' |', ' |', 'O|', 'O|', 'O|', 'O|', ' |']
+        board.instance_variable_set(:@row_six, [' |', ' |', 'O|', 'O|', 'O|', 'O|', ' |'])
       end
 
-      xit 'returns true' do
+      it 'returns true' do
         expect(connectfour.won?).to be true
       end
     end

@@ -48,22 +48,25 @@ class Gameboard
     @board_array.each do |row|
       full_row += 1 if row.include?(' |') == false
     end
-    true if full_row == 6
+    full_row == 6 ? true : false
   end
 
   def won_straight_line?
     @board_array.each do |arr|
       arr.each_with_index do |int, idx|
-        true if int[idx] == int[idx + 1] && int[idx] == int[idx + 2] && int[idx] == int[idx + 3]
+        int[idx] == int[idx + 1] && int[idx] == int[idx + 2] && int[idx] == int[idx + 3] ? true : false
       end
     end
   end
 
   def won_diagonal?
-
+    @board_array.each_with_index do |row, row_idx|
+      row.each_with_index do |col, col_idx|
+        col[col_idx] == row[row_idx + 1][col[col_idx +1]] ? true : false
+      end
+    end
   end
 end
 
-gameboard = Gameboard.new
-
-gameboard.current_board
+#notes:
+#need to amend won methods as current empty array counts as matching the next iteration in array

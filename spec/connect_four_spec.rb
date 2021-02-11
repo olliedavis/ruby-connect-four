@@ -3,7 +3,7 @@ require_relative '../lib/gameboard'
 
 describe ConnectFour do
   subject(:connectfour) { described_class.new }
-  subject(:board) { gameboard.new }
+  subject(:board) { Gameboard.new }
 
   describe '#player_input' do
     context 'when a valid input is provided' do
