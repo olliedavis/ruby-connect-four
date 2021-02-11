@@ -5,7 +5,7 @@ describe Gameboard do
   subject(:board) { described_class.new }
   subject(:connectfour) { ConnectFour.new }
 
-  describe '#self.counter_drop' do
+  describe 'counter_drop' do
     context 'when an empty column is chosen' do
       it 'puts the piece in the lowest position' do
         expect { board.counter_drop(0, 'O|') }.to change { board.instance_variable_get(:@row_six)[0] }.from(' |').to('O|')
