@@ -4,12 +4,21 @@ class Gameboard
   end
 
   def board
-    @row_one = [' '] * 7
-    @row_two = [' '] * 7
-    @row_three = [' '] * 7
-    @row_four = [' '] * 7
-    @row_five = [' '] * 7
-    @row_six = [' '] * 7
+    @board_array = [
+      @row_one = [' |'] * 7,
+      @row_two = [' |'] * 7,
+      @row_three = [' |'] * 7,
+      @row_four = [' |'] * 7,
+      @row_five = [' |'] * 7,
+      @row_six = [' |'] * 7,
+    ]
+  end
+
+  def current_board
+    puts 'Here is the current board:'
+    @board_array.each do |row|
+      puts row.join
+    end
   end
 
   def counter_drop(column, player)
@@ -18,7 +27,7 @@ class Gameboard
   end
 
   def counter_drop_position(column)
-    case ' '
+    case ' |'
     when @row_six[column]
       @row_six
     when @row_five[column]
@@ -35,15 +44,26 @@ class Gameboard
   end
 
   def full_board?
-    if @row_one.include?(' ') == false &&
-       @row_two.include?(' ') == false &&
-       @row_three.include?(' ') == false &&
-       @row_four.include?(' ') == false &&
-       @row_five.include?(' ') == false &&
-       @row_six.include?(' ') == false
-      true
-    else
-      false
+    full_row = 0
+    @board_array.each do |row|
+      full_row += 1 if row.include?(' |') == false
+    end
+    true if full_row == 6
+  end
+
+  def won_straight_line?
+    @board_array.each do |arr|
+      arr.each_with_index do |int, idx|
+        true if int[idx] == int[idx + 1] && int[idx] == int[idx + 2] && int[idx] == int[idx + 3]
+      end
     end
   end
+
+  def won_diagonal?
+
+  end
 end
+
+gameboard = Gameboard.new
+
+gameboard.current_board
