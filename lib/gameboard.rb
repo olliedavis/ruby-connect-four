@@ -53,11 +53,17 @@ class Gameboard
   end
 
   def won_straight_line?
-    @board_array.each do |row|
-      row.reverse.each_with_index do |int, idx|
-        int[idx] != @empty_space && int[idx] == int[idx + 1] && int[idx] == int[idx + 2] && int[idx] == int[idx + 3] ? true : false
+    correct_counter = 0
+    @board_array.reverse_each do |row|
+      row.each_with_index do |int, idx|
+        if int[idx] != ' |' && int[idx] == int[idx + 1] && int[idx] == int[idx + 2] && int[idx] == int[idx + 3]
+          correct_counter += 1
+        else
+          correct_counter = 0
+        end
       end
     end
+    correct_counter >= 4 ? true : false
   end
 
   def won_diagonal?
@@ -71,7 +77,7 @@ class Gameboard
         end
       end
     end
-    true if correct_counter == 4
+    correct_counter >= 4 ? true : false
   end
 end
 

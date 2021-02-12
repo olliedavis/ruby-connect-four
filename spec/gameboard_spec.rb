@@ -27,6 +27,7 @@ describe Gameboard do
     context 'when a straight line of four is made' do
       before do
         board.instance_variable_set(:@row_six, [' |', ' |', 'O|', 'O|', 'O|', 'O|', ' |'])
+        board.instance_variable_get(:@row_six).join
       end
 
       it 'returns true' do
