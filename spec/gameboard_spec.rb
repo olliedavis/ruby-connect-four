@@ -27,17 +27,16 @@ describe Gameboard do
     context 'when a straight line of four is made' do
       before do
         board.instance_variable_set(:@row_six, [' |', ' |', 'O|', 'O|', 'O|', 'O|', ' |'])
-        board.instance_variable_get(:@row_six).join
       end
 
       it 'returns true' do
-        expect(connectfour.won?).to be true
+        expect(board.won?).to be true
       end
     end
 
     context 'when a diagonal line of four is made' do
       before do
-        board.instance_variable_set(:@row_three, [' |', ' |', ' |', ' |', 'O|', ' |', ' |'])
+        board.instance_variable_set(:@row_three, [' |', ' |', ' |', ' |', ' |', ' |', ' |'])
         board.instance_variable_set(:@row_four, [' |', ' |', ' |', 'O|', 'X|', ' |', ' |'])
         board.instance_variable_set(:@row_five, [' |', ' |', 'O|', 'X|', 'X|', 'O|', ' |'])
         board.instance_variable_set(:@row_six, [' |', ' O|', 'X|', 'X|', 'X|', 'O|', ' |'])

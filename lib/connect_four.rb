@@ -20,8 +20,4 @@ class ConnectFour
   def valid?(int)
     int >= 1 && int <= 7 ? true : false
   end
-
-  def won?
-    true if @board.won_straight_line? == true || @board.won_diagonal? == true
-  end
 end

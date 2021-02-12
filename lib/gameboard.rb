@@ -1,7 +1,6 @@
 class Gameboard
   def initialize
     board
-    @empty_space = ' |'
   end
 
   def board
@@ -28,7 +27,7 @@ class Gameboard
   end
 
   def counter_drop_position(column)
-    case @empty_space
+    case ' |'
     when @row_six[column]
       @row_six
     when @row_five[column]
@@ -54,16 +53,17 @@ class Gameboard
 
   def won_straight_line?
     correct_counter = 0
-    @board_array.reverse_each do |row|
-      row.each_with_index do |int, idx|
-        if int[idx] != ' |' && int[idx] == int[idx + 1] && int[idx] == int[idx + 2] && int[idx] == int[idx + 3]
-          correct_counter += 1
+    @board_array.each do |row|
+      row.each_with_index do |col, idx|
+        if col[idx] == 'X|' || col[idx] == 'O|' && col[idx] == col[idx + 1]
+          break if winning_count?(correct_counter)
         else
           correct_counter = 0
         end
       end
+      break if winning_count?(correct_counter)
     end
-    correct_counter >= 4 ? true : false
+    winning_count?(correct_counter)
   end
 
   def won_diagonal?
@@ -77,8 +77,14 @@ class Gameboard
         end
       end
     end
-    correct_counter >= 4 ? true : false
+    winning_count?(correct_counter)
+  end
+
+  def winning_count?(counter)
+    counter >= 4 ? true : false
+  end
+
+  def won?
+    true if won_straight_line? == true || won_diagonal? == true
   end
 end
-
-#
