@@ -1,9 +1,5 @@
 class Gameboard
   def initialize
-    board
-  end
-
-  def board
     @board_array = [
       @row_one = [' |'] * 7,
       @row_two = [' |'] * 7,
@@ -12,6 +8,10 @@ class Gameboard
       @row_five = [' |'] * 7,
       @row_six = [' |'] * 7
     ]
+  end
+
+  def board
+   
   end
 
   def current_board
@@ -34,7 +34,7 @@ class Gameboard
       @row_five
     when @row_four[column]
       @row_four
-    when @row_three[column]
+    when row_three[column]
       @row_three
     when @row_two[column]
       @row_two
@@ -53,6 +53,7 @@ class Gameboard
 
   def won_straight_line?
     correct_counter = 0
+    puts @board_array.join
     @board_array.each do |row|
       row.each_with_index do |col, idx|
         if col[idx] == 'X|' || col[idx] == 'O|' && col[idx] == col[idx + 1]
@@ -68,7 +69,7 @@ class Gameboard
 
   def won_diagonal?
     correct_counter = 0
-    @board_array.reverse.each_with_index do |row, row_idx|
+    board_array.reverse.each_with_index do |row, row_idx|
       row.each_with_index do |col, col_idx|
         if col[col_idx] != @empty_space && col[col_idx] == row[row_idx + 1][col[col_idx + 1]]
           correct_counter += 1
@@ -81,7 +82,7 @@ class Gameboard
   end
 
   def winning_count?(counter)
-    counter >= 4 ? true : false
+    counter >= 4
   end
 
   def won?

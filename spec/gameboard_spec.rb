@@ -2,79 +2,75 @@ require_relative '../lib/gameboard'
 require_relative '../lib/connect_four'
 
 describe Gameboard do
-  subject(:board) { described_class.new }
+  subject(:gameboard) { described_class.new }
   subject(:connectfour) { ConnectFour.new }
 
   describe 'counter_drop' do
     context 'when an empty column is chosen' do
-      it 'puts the piece in the lowest position' do
-        expect { board.counter_drop(0, 'O|') }.to change { board.instance_variable_get(:@row_six)[0] }.from(' |').to('O|')
+      xit 'puts the piece in the lowest position' do
+        expect { gameboard.counter_drop(0, 'O|') }.to change { gameboard.instance_variable_get(:@row_six)[0] }.from(' |').to('O|')
       end
     end
 
     context 'when a non-empty column is chosen' do
       before do
-        board.instance_variable_get(:@row_six)[3] = 'O|'
+        gameboard.instance_variable_get(:@row_six)[3] = 'O|'
       end
 
-      it 'puts the piece at the lowest available position' do
-        expect { board.counter_drop(3, 'O|') }.to change { board.instance_variable_get(:@row_five)[3] }.from(' |').to('O|')
+      xit 'puts the piece at the lowest available position' do
+        expect { gameboard.counter_drop(3, 'O|') }.to change { gameboard.instance_variable_get(:@row_five)[3] }.from(' |').to('O|')
       end
     end
   end
 
-  describe '#won?' do
+  describe '#won_straight_line?' do
     context 'when a straight line of four is made' do
       before do
-        board.instance_variable_set(:@row_six, [' |', ' |', 'O|', 'O|', 'O|', 'O|', ' |'])
+        subject.instance_variable_set(:@row_six, [' |', ' |', 'O|', 'O|', 'O|', 'O|', ' |'])
       end
 
       it 'returns true' do
-        expect(board.won?).to be true
+        subject.instance_variable_set(:@row_six, [' |', ' |', 'O|', 'O|', 'O|', 'O|', ' |'])
+        expect(gameboard.won_straight_line?).to be true
       end
     end
 
+  describe '#won_diagonal?'
     context 'when a diagonal line of four is made' do
       before do
-        board.instance_variable_set(:@row_three, [' |', ' |', ' |', ' |', ' |', ' |', ' |'])
-        board.instance_variable_set(:@row_four, [' |', ' |', ' |', 'O|', 'X|', ' |', ' |'])
-        board.instance_variable_set(:@row_five, [' |', ' |', 'O|', 'X|', 'X|', 'O|', ' |'])
-        board.instance_variable_set(:@row_six, [' |', ' O|', 'X|', 'X|', 'X|', 'O|', ' |'])
+        gameboard.instance_variable_set(:@row_three, [' |', ' |', ' |', ' |', ' |', ' |', ' |'])
+        gameboard.instance_variable_set(:@row_four, [' |', ' |', ' |', 'O|', 'X|', ' |', ' |'])
+        gameboard.instance_variable_set(:@row_five, [' |', ' |', 'O|', 'X|', 'X|', 'O|', ' |'])
+        gameboard.instance_variable_set(:@row_six, [' |', ' O|', 'X|', 'X|', 'X|', 'O|', ' |'])
       end
 
       xit 'returns true' do
-        expect(connectfour.won?).to be true
-      end
-    end
-
-    context 'when a line of four has not been made' do
-      xit 'returns false' do
-        expect(connectfour.won?).to be false
+        expect(connectfour.won_diagonal?).to be true
       end
     end
   end
+
 
   describe '#full_board?' do
     context 'when there are no positions left' do
       before do
-        board.instance_variable_set(:@row_one, ['O|'] * 7)
-        board.instance_variable_set(:@row_two, ['O|'] * 7)
-        board.instance_variable_set(:@row_three, ['O|'] * 7)
-        board.instance_variable_set(:@row_four, ['O|'] * 7)
-        board.instance_variable_set(:@row_five, ['O|'] * 7)
-        board.instance_variable_set(:@row_six, ['O|'] * 7)
+        gameboard.instance_variable_set(:@row_one, ['O|'] * 7)
+        gameboard.instance_variable_set(:@row_two, ['O|'] * 7)
+        gameboard.instance_variable_set(:@row_three, ['O|'] * 7)
+        gameboard.instance_variable_set(:@row_four, ['O|'] * 7)
+        gameboard.instance_variable_set(:@row_five, ['O|'] * 7)
+        gameboard.instance_variable_set(:@row_six, ['O|'] * 7)
       end
 
       xit 'returns true' do
-        expect(board.full_board?).to be true
+        expect(gameboard.full_board?).to be true
       end
     end
 
     context 'when there are positions left' do
       xit 'returns false' do
-        expect(board.full_board?).to be false
+        expect(gameboard.full_board?).to be false
       end
     end
   end
 end
-
