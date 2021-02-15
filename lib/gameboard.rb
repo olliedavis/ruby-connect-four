@@ -1,22 +1,22 @@
 class Gameboard
   def initialize
-    @board_array = [
-      @row_one = [' |'] * 7,
-      @row_two = [' |'] * 7,
-      @row_three = [' |'] * 7,
-      @row_four = [' |'] * 7,
-      @row_five = [' |'] * 7,
-      @row_six = [' |'] * 7
+    @board = [
+      row_one = [' |'] * 7,
+      row_two = [' |'] * 7,
+      row_three = [' |'] * 7,
+      row_four = [' |'] * 7,
+      row_five = [' |'] * 7,
+      row_six = [' |'] * 7
     ]
   end
 
   def board
-   
+    
   end
 
   def current_board
     puts 'Here is the current board:'
-    @board_array.each do |row|
+    board.each do |row|
       puts row.join
     end
   end
@@ -45,7 +45,7 @@ class Gameboard
 
   def full_board?
     full_row = 0
-    @board_array.each do |row|
+    board.each do |row|
       full_row += 1 if row.include?(' |') == false
     end
     true if full_row == 6
@@ -53,10 +53,10 @@ class Gameboard
 
   def won_straight_line?
     correct_counter = 0
-    puts @board_array.join
-    @board_array.each do |row|
+    @board.each do |row|
       row.each_with_index do |col, idx|
-        if col[idx] == 'X|' || col[idx] == 'O|' && col[idx] == col[idx + 1]
+        if col == 'X|' || col == 'O|' && col == col[idx + 1]
+          correct_counter += 1
           break if winning_count?(correct_counter)
         else
           correct_counter = 0
@@ -69,7 +69,7 @@ class Gameboard
 
   def won_diagonal?
     correct_counter = 0
-    board_array.reverse.each_with_index do |row, row_idx|
+    board.reverse.each_with_index do |row, row_idx|
       row.each_with_index do |col, col_idx|
         if col[col_idx] != @empty_space && col[col_idx] == row[row_idx + 1][col[col_idx + 1]]
           correct_counter += 1

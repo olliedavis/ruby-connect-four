@@ -25,17 +25,23 @@ describe Gameboard do
 
   describe '#won_straight_line?' do
     context 'when a straight line of four is made' do
-      before do
-        subject.instance_variable_set(:@row_six, [' |', ' |', 'O|', 'O|', 'O|', 'O|', ' |'])
-      end
-
       it 'returns true' do
-        subject.instance_variable_set(:@row_six, [' |', ' |', 'O|', 'O|', 'O|', 'O|', ' |'])
+        board = gameboard.instance_variable_get(:@board )[5] = [' |', ' |', ' |', 'X|', 'X|', 'X|', 'X|']
+        allow(board).to receive(:@board).and_return(board)
         expect(gameboard.won_straight_line?).to be true
       end
     end
 
-  describe '#won_diagonal?'
+    context 'when a straight line of four is not made' do
+      it 'returns false' do
+        board = gameboard.instance_variable_get(:@board )[5] = [' |', ' |', ' |', 'X|', 'O|', 'X|', 'X|']
+        allow(board).to receive(:@board).and_return(board)
+        expect(gameboard.won_straight_line?).to be false
+      end
+    end
+  end
+
+  describe '#won_diagonal?' do
     context 'when a diagonal line of four is made' do
       before do
         gameboard.instance_variable_set(:@row_three, [' |', ' |', ' |', ' |', ' |', ' |', ' |'])
