@@ -3,6 +3,7 @@ require_relative 'gameboard'
 class ConnectFour
   def initialize
     @board = Gameboard.new
+    @player_count = 0
     # play
   end
 
@@ -20,4 +21,9 @@ class ConnectFour
   def valid?(int)
     int >= 1 && int <= 7 ? true : false
   end
+
+  def player_turn
+    @player_count.zero? ? 'O|' : 'X|'
+  end
+
 end

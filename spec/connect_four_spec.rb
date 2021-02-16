@@ -42,4 +42,19 @@ describe ConnectFour do
       end
     end
   end
+
+  describe '#player_turn' do
+    context 'when circle takes their turn' do
+      it 'returns cross' do
+        connectfour.instance_variable_set(:@player_count, 1)
+        expect(connectfour.player_turn).to eq('X|')
+      end
+    end
+
+    context 'when cross takes their turn' do
+      it 'returns circle' do
+        expect(connectfour.player_turn).to eq('O|')
+      end
+    end
+  end
 end
