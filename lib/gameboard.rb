@@ -68,21 +68,23 @@ class Gameboard
   end
 
   def won_diagonal?
-    correct_counter = 0
-    board.reverse.each_with_index do |row, row_idx|
+    won_counter = 0
+    @board.reverse.each_with_index do |row, row_idx|
       row.each_with_index do |col, col_idx|
-        if col[col_idx] != @empty_space && col[col_idx] == row[row_idx + 1][col[col_idx + 1]]
-          correct_counter += 1
+        if ['X|', 'O|'].any?(col) && col == @board.reverse[row_idx + 1][col_idx + 1] && col == @board.reverse[row_idx + 2][col_idx + 2] && col == @board.reverse[row_idx + 3][col_idx + 3]
+          won_counter += 1
+        elsif ['X|', 'O|'].any?(col) && col == @board.reverse[row_idx + 1][col_idx - 1] && col == @board.reverse[row_idx + 2][col_idx - 2] && col == @board.reverse[row_idx + 3][col_idx - 3]
+          won_counter += 1
         else
-          correct_counter = 0
+          next
         end
       end
     end
-    winning_count?(correct_counter)
+    true if won_counter >= 1
   end
 
   def winning_count?(counter)
-    counter >= 4
+    counter == 3
   end
 
   def won?

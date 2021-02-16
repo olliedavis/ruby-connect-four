@@ -42,16 +42,39 @@ describe Gameboard do
   end
 
   describe '#won_diagonal?' do
-    context 'when a diagonal line of four is made' do
+    context 'when a winning forward diagonal line of four is made' do
       before do
-        gameboard.instance_variable_set(:@row_three, [' |', ' |', ' |', ' |', ' |', ' |', ' |'])
-        gameboard.instance_variable_set(:@row_four, [' |', ' |', ' |', 'O|', 'X|', ' |', ' |'])
-        gameboard.instance_variable_set(:@row_five, [' |', ' |', 'O|', 'X|', 'X|', 'O|', ' |'])
-        gameboard.instance_variable_set(:@row_six, [' |', ' O|', 'X|', 'X|', 'X|', 'O|', ' |'])
+        board = gameboard.instance_variable_get(:@board)
+        board[2] = [' |', ' |', ' |', ' |', ' |', ' |', 'X|']
+        board[3] = [' |', ' |', ' |', ' |', 'O|', 'X|', 'O|']
+        board[4] = [' |', ' |', ' |', 'O|', 'X|', 'X|', 'O|']
+        board[5] = [' |', ' |', ' |', 'X|', 'X|', 'X|', 'O|']
+        allow(board).to receive(:@board).and_return(board)
       end
 
-      xit 'returns true' do
-        expect(connectfour.won_diagonal?).to be true
+      it 'returns true' do
+        expect(gameboard.won_diagonal?).to be true
+      end
+    end
+
+    context 'when a winning backwards diagonal line of four is made' do
+      before do
+        board = gameboard.instance_variable_get(:@board)
+        board[2] = [' |', ' |', ' |', 'O|', ' |', ' |', 'X|']
+        board[3] = [' |', ' |', ' |', 'X|', 'O|', 'X|', 'O|']
+        board[4] = [' |', ' |', ' |', 'O|', 'O|', 'O|', 'O|']
+        board[5] = [' |', ' |', ' |', 'O|', 'X|', 'X|', 'O|']
+        allow(board).to receive(:@board).and_return(board)
+      end
+
+      it 'returns true' do
+        expect(gameboard.won_diagonal?).to be true
+      end
+    end
+
+    context 'when no diagonal line of four is made' do
+      it 'returns nil' do
+        expect(gameboard.won_diagonal?).to be nil
       end
     end
   end
