@@ -45,10 +45,10 @@ class Gameboard
 
   def full_board?
     full_row = 0
-    board.each do |row|
+    @board.each do |row|
       full_row += 1 if row.include?(' |') == false
     end
-    true if full_row == 6
+    full_row == 6
   end
 
   def won_straight_line?
@@ -80,7 +80,7 @@ class Gameboard
         end
       end
     end
-    true if won_counter >= 1
+    won_counter >= 1
   end
 
   def winning_count?(counter)

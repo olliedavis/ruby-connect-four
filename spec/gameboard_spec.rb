@@ -74,7 +74,7 @@ describe Gameboard do
 
     context 'when no diagonal line of four is made' do
       it 'returns nil' do
-        expect(gameboard.won_diagonal?).to be nil
+        expect(gameboard.won_diagonal?).to be false
       end
     end
   end
@@ -83,21 +83,23 @@ describe Gameboard do
   describe '#full_board?' do
     context 'when there are no positions left' do
       before do
-        gameboard.instance_variable_set(:@row_one, ['O|'] * 7)
-        gameboard.instance_variable_set(:@row_two, ['O|'] * 7)
-        gameboard.instance_variable_set(:@row_three, ['O|'] * 7)
-        gameboard.instance_variable_set(:@row_four, ['O|'] * 7)
-        gameboard.instance_variable_set(:@row_five, ['O|'] * 7)
-        gameboard.instance_variable_set(:@row_six, ['O|'] * 7)
+        board = gameboard.instance_variable_get(:@board)
+        board[0] = ['O|'] * 7
+        board[1] = ['X|'] * 7
+        board[2] = ['O|'] * 7
+        board[3] = ['X|'] * 7
+        board[4] = ['O|'] * 7
+        board[5] = ['X|'] * 7
+        allow(board).to receive(:@board).and_return(board)
       end
 
-      xit 'returns true' do
+      it 'returns true' do
         expect(gameboard.full_board?).to be true
       end
     end
 
     context 'when there are positions left' do
-      xit 'returns false' do
+      it 'returns false' do
         expect(gameboard.full_board?).to be false
       end
     end
