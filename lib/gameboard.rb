@@ -1,18 +1,16 @@
 class Gameboard
   def initialize
     @board = [
-      row_one = [' |'] * 7,
-      row_two = [' |'] * 7,
-      row_three = [' |'] * 7,
-      row_four = [' |'] * 7,
+      row_six = [' |'] * 7,
       row_five = [' |'] * 7,
-      row_six = [' |'] * 7
+      row_four = [' |'] * 7,
+      row_three = [' |'] * 7,
+      row_two = [' |'] * 7,
+      row_one = [' |'] * 7
     ]
   end
 
-  def board
-    
-  end
+
 
   def current_board
     puts 'Here is the current board:'
@@ -24,22 +22,23 @@ class Gameboard
   def counter_drop(column, player)
     position = counter_drop_position(column)
     position[column] = player
+    puts @board.reverse.join
   end
 
   def counter_drop_position(column)
     case ' |'
-    when @row_six[column]
-      @row_six
-    when @row_five[column]
-      @row_five
-    when @row_four[column]
-      @row_four
-    when row_three[column]
-      @row_three
-    when @row_two[column]
-      @row_two
-    when @row_one[column]
-      @row_one
+    when @board[0][column]
+      @board[0]
+    when @board[1][column]
+      @board[1]
+    when @board[2][column]
+      @board[2]
+    when @board[3][column]
+      @board[3]
+    when @board[4][column]
+      @board[4]
+    when @board[5][column]
+      @board[5]
     end
   end
 
@@ -69,11 +68,11 @@ class Gameboard
 
   def won_diagonal?
     won_counter = 0
-    @board.reverse.each_with_index do |row, row_idx|
+    @board.each_with_index do |row, row_idx|
       row.each_with_index do |col, col_idx|
-        if ['X|', 'O|'].any?(col) && col == @board.reverse[row_idx + 1][col_idx + 1] && col == @board.reverse[row_idx + 2][col_idx + 2] && col == @board.reverse[row_idx + 3][col_idx + 3]
+        if ['X|', 'O|'].any?(col) && col == @board[row_idx + 1][col_idx + 1] && col == @board[row_idx + 2][col_idx + 2] && col == @board[row_idx + 3][col_idx + 3]
           won_counter += 1
-        elsif ['X|', 'O|'].any?(col) && col == @board.reverse[row_idx + 1][col_idx - 1] && col == @board.reverse[row_idx + 2][col_idx - 2] && col == @board.reverse[row_idx + 3][col_idx - 3]
+        elsif ['X|', 'O|'].any?(col) && col == @board[row_idx + 1][col_idx - 1] && col == @board[row_idx + 2][col_idx - 2] && col == @board[row_idx + 3][col_idx - 3]
           won_counter += 1
         else
           next
