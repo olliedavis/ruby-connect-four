@@ -8,18 +8,21 @@ describe Gameboard do
   describe 'counter_drop' do
     context 'when an empty column is chosen' do
       it 'puts the piece in the lowest position' do
-        expect { gameboard.counter_drop(0, 'O|') }.to change { gameboard.instance_variable_get(:@board)[0][0] }.from(' |').to('O|')
+        expect { gameboard.counter_drop(0, 'O|') }.to change {
+                                                        gameboard.instance_variable_get(:@board)[0][0]
+                                                      }.from(' |').to('O|')
       end
     end
 
     context 'when a non-empty column is chosen' do
       before do
         board = gameboard.instance_variable_get(:@board)[0][3] = 'X|'
-        allow(board).to receive(:@board).and_return(board)
       end
 
       it 'puts the piece at the lowest available position' do
-        expect { gameboard.counter_drop(3, 'O|') }.to change { gameboard.instance_variable_get(:@board)[1][3] }.from(' |').to('O|')
+        expect { gameboard.counter_drop(3, 'O|') }.to change {
+                                                        gameboard.instance_variable_get(:@board)[1][3]
+                                                      }.from(' |').to('O|')
       end
     end
   end
@@ -27,16 +30,14 @@ describe Gameboard do
   describe '#won_straight_line?' do
     context 'when a straight line of four is made' do
       it 'returns true' do
-        board = gameboard.instance_variable_get(:@board )[0] = [' |', ' |', ' |', 'X|', 'X|', 'X|', 'X|']
-        allow(board).to receive(:@board).and_return(board)
+        board = gameboard.instance_variable_get(:@board)[0] = [' |', ' |', ' |', 'X|', 'X|', 'X|', 'X|']
         expect(gameboard.won_straight_line?).to be true
       end
     end
 
     context 'when a straight line of four is not made' do
       it 'returns false' do
-        board = gameboard.instance_variable_get(:@board )[0] = [' |', ' |', ' |', 'X|', 'O|', 'X|', 'X|']
-        allow(board).to receive(:@board).and_return(board)
+        board = gameboard.instance_variable_get(:@board)[0] = [' |', ' |', ' |', 'X|', 'O|', 'X|', 'X|']
         expect(gameboard.won_straight_line?).to be false
       end
     end
@@ -50,7 +51,6 @@ describe Gameboard do
         board[2] = [' |', ' |', ' |', ' |', 'O|', 'X|', 'O|']
         board[1] = [' |', ' |', ' |', 'O|', 'X|', 'X|', 'O|']
         board[0] = [' |', ' |', ' |', 'X|', 'X|', 'X|', 'O|']
-        allow(board).to receive(:@board).and_return(board)
       end
 
       it 'returns true' do
@@ -65,7 +65,6 @@ describe Gameboard do
         board[2] = [' |', ' |', ' |', 'X|', 'O|', 'X|', 'O|']
         board[1] = [' |', ' |', ' |', 'O|', 'O|', 'O|', 'O|']
         board[0] = [' |', ' |', ' |', 'O|', 'X|', 'X|', 'O|']
-        allow(board).to receive(:@board).and_return(board)
       end
 
       it 'returns true' do
@@ -80,7 +79,6 @@ describe Gameboard do
     end
   end
 
-
   describe '#full_board?' do
     context 'when there are no positions left' do
       before do
@@ -91,7 +89,6 @@ describe Gameboard do
         board[3] = ['X|'] * 7
         board[4] = ['O|'] * 7
         board[5] = ['X|'] * 7
-        allow(board).to receive(:@board).and_return(board)
       end
 
       it 'returns true' do
