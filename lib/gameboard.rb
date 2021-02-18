@@ -1,4 +1,6 @@
 class Gameboard
+  attr_accessor :board
+
   def initialize
     @board = [
       row_six = [' |'] * 7,
@@ -22,7 +24,6 @@ class Gameboard
   def counter_drop(column, player)
     position = counter_drop_position(column)
     position[column] = player
-    puts @board.reverse.join
   end
 
   def counter_drop_position(column)

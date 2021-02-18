@@ -16,7 +16,7 @@ describe Gameboard do
 
     context 'when a non-empty column is chosen' do
       before do
-        board = gameboard.instance_variable_get(:@board)[0][3] = 'X|'
+        gameboard.instance_variable_get(:@board)[0][3] = 'X|'
       end
 
       it 'puts the piece at the lowest available position' do
@@ -30,14 +30,14 @@ describe Gameboard do
   describe '#won_straight_line?' do
     context 'when a straight line of four is made' do
       it 'returns true' do
-        board = gameboard.instance_variable_get(:@board)[0] = [' |', ' |', ' |', 'X|', 'X|', 'X|', 'X|']
+        gameboard.instance_variable_get(:@board)[0] = [' |', ' |', ' |', 'X|', 'X|', 'X|', 'X|']
         expect(gameboard.won_straight_line?).to be true
       end
     end
 
     context 'when a straight line of four is not made' do
       it 'returns false' do
-        board = gameboard.instance_variable_get(:@board)[0] = [' |', ' |', ' |', 'X|', 'O|', 'X|', 'X|']
+        gameboard.instance_variable_get(:@board)[0] = [' |', ' |', ' |', 'X|', 'O|', 'X|', 'X|']
         expect(gameboard.won_straight_line?).to be false
       end
     end
