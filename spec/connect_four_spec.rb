@@ -3,7 +3,6 @@ require_relative '../lib/gameboard'
 
 describe ConnectFour do
   subject(:connectfour) { described_class.new }
-  subject(:gameboard) { Gameboard.new }
 
   describe '#player_input' do
     context 'when a valid input is provided' do
@@ -45,23 +44,15 @@ describe ConnectFour do
 
   describe '#current_player' do
     context 'when circle takes their turn' do
-      before do
-        o_turn = [' |', ' |', ' |', 'X|', 'O|', ' |', ' |']
-        allow(connectfour).to receive(:gameboard.board[0]).and_return(o_turn)
-      end
-
       it 'returns cross' do
+        connectfour.instance_variable_get(:@board)[5] = [' |', ' |', ' |', 'X|', 'O|', ' |', ' |']
         expect(connectfour.current_player).to eq('X|')
       end
     end
 
     context 'when cross takes their turn' do
-      before do
-        gameboard.board[0] = [' |', ' |', ' |', 'X|', 'O|', ' |', ' |']
-
-      end
-
       it 'returns circle' do
+        connectfour.instance_variable_get(:@board)[5] = [' |', ' |', ' |', 'X|', ' |', ' |', ' |']
         expect(connectfour.current_player).to eq('O|')
       end
     end

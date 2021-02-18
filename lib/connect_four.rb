@@ -2,8 +2,8 @@ require_relative 'gameboard'
 
 class ConnectFour
   def initialize
-    @board = Gameboard.new
-    @player_count = 0
+    @gameboard = Gameboard.new
+    @board = @gameboard.board
     # play
   end
 
@@ -22,8 +22,17 @@ class ConnectFour
     int >= 1 && int <= 7 ? true : false
   end
 
-  def player_turn
-    @player_count.zero? ? 'O|' : 'X|'
+  def current_player
+    turn_count.even? ? 'X|' : 'O|'
   end
 
+  def turn_count
+    taken = 0
+    @board.each do |row|
+      row.each do |slot|
+        taken += 1 if slot == 'X|' || slot == 'O|'
+      end
+    end
+    taken
+  end
 end
