@@ -3,22 +3,20 @@ class Gameboard
 
   def initialize
     @board = [
-      row_six = [' |'] * 7,
-      row_five = [' |'] * 7,
-      row_four = [' |'] * 7,
-      row_three = [' |'] * 7,
-      row_two = [' |'] * 7,
-      row_one = [' |'] * 7
+      [' |'] * 8,
+      [' |'] * 8,
+      [' |'] * 8,
+      [' |'] * 8,
+      [' |'] * 8,
+      [' |'] * 8
     ]
   end
 
-
-
   def current_board
-    puts 'Here is the current board:'
     board.each do |row|
       puts row.join
     end
+    puts " |1|2|3|4|5|6|7|"
   end
 
   def counter_drop(column, player)
