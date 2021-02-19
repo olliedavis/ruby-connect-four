@@ -3,12 +3,12 @@ class Gameboard
 
   def initialize
     @board = [
-      [' |'] * 8,
-      [' |'] * 8,
-      [' |'] * 8,
-      [' |'] * 8,
-      [' |'] * 8,
-      [' |'] * 8
+      [' |'] * 7,
+      [' |'] * 7,
+      [' |'] * 7,
+      [' |'] * 7,
+      [' |'] * 7,
+      [' |'] * 7
     ]
   end
 
@@ -16,7 +16,7 @@ class Gameboard
     board.each do |row|
       puts row.join
     end
-    puts " |1|2|3|4|5|6|7|"
+    puts '1|2|3|4|5|6|7'
   end
 
   def counter_drop(column, player)
@@ -26,18 +26,18 @@ class Gameboard
 
   def counter_drop_position(column)
     case ' |'
-    when @board[0][column]
-      @board[0]
-    when @board[1][column]
-      @board[1]
-    when @board[2][column]
-      @board[2]
-    when @board[3][column]
-      @board[3]
-    when @board[4][column]
-      @board[4]
     when @board[5][column]
       @board[5]
+    when @board[4][column]
+      @board[4]
+    when @board[3][column]
+      @board[3]
+    when @board[2][column]
+      @board[2]
+    when @board[1][column]
+      @board[1]
+    when @board[0][column]
+      @board[0]
     end
   end
 
@@ -55,23 +55,28 @@ class Gameboard
       row.each_with_index do |col, idx|
         if col == 'X|' || col == 'O|' && col == col[idx + 1]
           correct_counter += 1
-          break if winning_count?(correct_counter)
+          break if correct_counter > 3
         else
           correct_counter = 0
         end
       end
-      break if winning_count?(correct_counter)
+      break if correct_counter > 3
     end
-    winning_count?(correct_counter)
+    correct_counter > 3
   end
 
-  def won_diagonal?
+  def won_diagonal?(current_player)
     won_counter = 0
-    @board.each_with_index do |row, row_idx|
-      row.each_with_index do |col, col_idx|
-        if ['X|', 'O|'].any?(col) && col == @board[row_idx + 1][col_idx + 1] && col == @board[row_idx + 2][col_idx + 2] && col == @board[row_idx + 3][col_idx + 3]
+    @board[0..2].reverse.each_with_index do |row, row_idx|
+      row[0..3].each_with_index do |_col, col_idx|
+        if current_player == @board[row_idx][col_idx] && current_player == @board[row_idx + 1][col_idx + 1] && current_player == @board[row_idx + 2][col_idx + 2] && current_player == @board[row_idx + 3][col_idx + 3]
           won_counter += 1
-        elsif ['X|', 'O|'].any?(col) && col == @board[row_idx + 1][col_idx - 1] && col == @board[row_idx + 2][col_idx - 2] && col == @board[row_idx + 3][col_idx - 3]
+        else
+          next
+        end
+      end
+      row[3..6].each_with_index do |_col, col_idx|
+        if current_player == @board[row_idx][col_idx] && current_player == @board[row_idx + 1][col_idx - 1] && current_player == @board[row_idx + 2][col_idx - 2] && current_player == @board[row_idx + 3][col_idx - 3]
           won_counter += 1
         else
           next
@@ -79,10 +84,6 @@ class Gameboard
       end
     end
     won_counter >= 1
-  end
-
-  def winning_count?(counter)
-    counter == 3
   end
 
   def won?

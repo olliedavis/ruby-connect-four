@@ -9,19 +9,19 @@ describe Gameboard do
     context 'when an empty column is chosen' do
       it 'puts the piece in the lowest position' do
         expect { gameboard.counter_drop(0, 'O|') }.to change {
-                                                        gameboard.instance_variable_get(:@board)[0][0]
+                                                        gameboard.instance_variable_get(:@board)[5][0]
                                                       }.from(' |').to('O|')
       end
     end
 
     context 'when a non-empty column is chosen' do
       before do
-        gameboard.instance_variable_get(:@board)[0][3] = 'X|'
+        gameboard.instance_variable_get(:@board)[5][3] = 'X|'
       end
 
       it 'puts the piece at the lowest available position' do
         expect { gameboard.counter_drop(3, 'O|') }.to change {
-                                                        gameboard.instance_variable_get(:@board)[1][3]
+                                                        gameboard.instance_variable_get(:@board)[4][3]
                                                       }.from(' |').to('O|')
       end
     end

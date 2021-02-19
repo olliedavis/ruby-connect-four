@@ -4,7 +4,6 @@ class ConnectFour
   def initialize
     @gameboard = Gameboard.new
     @board = @gameboard.board
-    intro
   end
 
   def intro
@@ -26,19 +25,19 @@ class ConnectFour
     end
   end
 
-  def player_input(char = current_player[0])
-    puts "Player #{char}, please enter the number of the column of where you would like to drop your token"
-    input = gets.chomp.to_i - 1
+  def player_input(char)
+    puts "Player #{char[0]}, please enter the number of the column of where you would like to drop your token"
+    input = gets.to_i - 1
 
     until valid?(input)
       puts 'Invalid input, please enter the number of the column of where you would like to drop your token'
-      input = gets.chomp.to_i - 1
+      input = gets.to_i - 1
     end
     input
   end
 
   def valid?(int)
-    int >= 1 && int <= 7 ? true : false
+    int >= 0 && int <= 6 ? true : false
   end
 
   def current_player
@@ -56,7 +55,7 @@ class ConnectFour
   end
 
   def won?
-    @gameboard.won_straight_line? || @gameboard.won_diagonal?
+    @gameboard.won_straight_line? || @gameboard.won_diagonal?(current_player)
   end
 
   def draw?
@@ -68,17 +67,20 @@ class ConnectFour
   end
 
   def congrats(player)
-    puts "Congratulations #{player}, you win!"
+    puts "Congratulations #{player[0]}, you win!"
+    @gameboard.current_board
     play_again?
   end
 
   def play_again?
     puts 'Play Again? Enter 1 for Yes, or 2 for No'
-    gets.chomp_to_i == 1 ? game_start : exit
+    gets.to_i == 1 ? ConnectFour.game_start : exit
   end
 
-  def game_start
+  def self.game_start
     game = ConnectFour.new
-    game.play
+    game.intro
   end
 end
+
+ConnectFour.game_start
