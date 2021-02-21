@@ -19,7 +19,7 @@ class ConnectFour
       @gameboard.counter_drop(column, current_player)
     end
     if won?
-      congrats(current_player)
+      congrats(winner)
     else
       puts "It's a draw!"
       play_again?
@@ -65,6 +65,11 @@ class ConnectFour
 
   def over?
     won? || draw?
+  end
+
+  def winner
+    #the reverse of current_player or else congrats calls the next player, not the winner
+    turn_count.even? ? 'O|' : 'X|'
   end
 
   def congrats(player)
