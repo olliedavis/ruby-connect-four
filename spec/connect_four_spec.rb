@@ -11,7 +11,7 @@ describe ConnectFour do
       end
 
       it 'validates and returns correct index' do
-        result = connectfour.player_input
+        result = connectfour.player_input('|O')
         expect(result).to eq(3)
       end
     end
@@ -22,7 +22,7 @@ describe ConnectFour do
       end
 
       it 'validates and returns the correct index' do
-        result = connectfour.player_input
+        result = connectfour.player_input('X|')
         expect(result).to eq(4)
       end
     end
