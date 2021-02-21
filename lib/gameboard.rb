@@ -10,6 +10,7 @@ class Gameboard
       [' |'] * 7,
       [' |'] * 7
     ]
+    @tokens = ['X|', 'O|']
   end
 
   def current_board
@@ -52,10 +53,12 @@ class Gameboard
   def won_horizontal?
     win_counter = 0
     @board.reverse.each do |row|
-      row[0..3].each_with_index do |col, idx|
-        if ['X|', 'O|'].any?(col) && col == col[idx + 1]
+      row.each_with_index do |col, idx|
+        if @tokens.any?(col) && col == row[idx + 1]
+          puts win_counter
           win_counter += 1
-          return true if win_counter > 3
+          puts win_counter
+          return true if win_counter >= 3
         else
           win_counter = 0
         end

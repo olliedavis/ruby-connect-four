@@ -29,8 +29,12 @@ describe Gameboard do
 
   describe '#won_horizontal?' do
     context 'when a straight line of four is made' do
+      before do
+        board = gameboard.instance_variable_get(:@board)
+        board[0] = 'O|', 'O|', 'O|', 'O|', 'X|', 'X|', 'X|'
+      end
+
       it 'returns true' do
-        gameboard.instance_variable_get(:@board)[0] = [' |', ' |', ' |', 'X|', 'X|', 'X|', 'X|']
         expect(gameboard.won_horizontal?).to be true
       end
     end
