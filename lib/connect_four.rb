@@ -1,3 +1,4 @@
+require 'pry'
 require_relative 'gameboard'
 
 class ConnectFour
@@ -7,7 +8,7 @@ class ConnectFour
   end
 
   def intro
-    puts 'Welcome to Connect Four. Please read the README if you are unsure how to play.' < "\n"
+    puts 'Welcome to Connect Four. Please read the README if you are unsure how to play.'
     play
   end
 
@@ -55,7 +56,7 @@ class ConnectFour
   end
 
   def won?
-    @gameboard.won_straight_line? || @gameboard.won_diagonal?(current_player)
+    @gameboard.won_straight_line? || @gameboard.won_diagonal?
   end
 
   def draw?
@@ -67,20 +68,21 @@ class ConnectFour
   end
 
   def congrats(player)
-    puts "Congratulations #{player[0]}, you win!"
     @gameboard.current_board
+    puts "Congratulations #{player[0]}, you win!"
     play_again?
   end
 
   def play_again?
     puts 'Play Again? Enter 1 for Yes, or 2 for No'
-    gets.to_i == 1 ? ConnectFour.game_start : exit
+    gets.to_i == 1 ? game_start : exit
   end
 
-  def self.game_start
-    game = ConnectFour.new
-    game.intro
-  end
 end
 
-ConnectFour.game_start
+def game_start
+  game = ConnectFour.new
+  game.intro
+end
+
+game_start
