@@ -50,40 +50,39 @@ class Gameboard
   end
 
   def won_straight_line?
-    correct_counter = 0
+    win_counter = 0
     @board.each do |row|
       row.each_with_index do |col, idx|
         if col == 'X|' || col == 'O|' && col == col[idx + 1]
-          correct_counter += 1
-          break if correct_counter > 3
+          win_counter += 1
+          return true if win_counter > 3
         else
-          correct_counter = 0
+          win_counter = 0
         end
       end
-      break if correct_counter > 3
     end
-    correct_counter > 3
+    false
   end
 
-  def won_diagonal?(current_player)
-    won_counter = 0
+  def won_diagonal?
     @board[0..2].reverse.each_with_index do |row, row_idx|
-      row[0..3].each_with_index do |_col, col_idx|
-        if current_player == @board[row_idx][col_idx] && current_player == @board[row_idx + 1][col_idx + 1] && current_player == @board[row_idx + 2][col_idx + 2] && current_player == @board[row_idx + 3][col_idx + 3]
-          won_counter += 1
+      row[0..3].each_with_index do |col, col_idx|
+        if col == 'X|' || col == 'O|' && col == @board[row_idx][col_idx] && col == @board[row_idx + 1][col_idx + 1] && col == @board[row_idx + 2][col_idx + 2] && col == @board[row_idx + 3][col_idx + 3]
+          return true
         else
           next
         end
       end
-      row[3..6].each_with_index do |_col, col_idx|
-        if current_player == @board[row_idx][col_idx] && current_player == @board[row_idx + 1][col_idx - 1] && current_player == @board[row_idx + 2][col_idx - 2] && current_player == @board[row_idx + 3][col_idx - 3]
-          won_counter += 1
+
+      row[3..6].each_with_index do |col, col_idx|
+        if col == 'X|' || col == 'O|' && col == @board[row_idx][col_idx] && col == @board[row_idx + 1][col_idx - 1] && col == @board[row_idx + 2][col_idx - 2] && col == @board[row_idx + 3][col_idx - 3]
+          return true
         else
           next
         end
       end
     end
-    won_counter >= 1
+    false
   end
 
   def won?
