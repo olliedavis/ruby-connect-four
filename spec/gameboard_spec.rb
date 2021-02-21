@@ -27,18 +27,18 @@ describe Gameboard do
     end
   end
 
-  describe '#won_straight_line?' do
+  describe '#won_horizontal?' do
     context 'when a straight line of four is made' do
       it 'returns true' do
         gameboard.instance_variable_get(:@board)[0] = [' |', ' |', ' |', 'X|', 'X|', 'X|', 'X|']
-        expect(gameboard.won_straight_line?).to be true
+        expect(gameboard.won_horizontal?).to be true
       end
     end
 
     context 'when a straight line of four is not made' do
       it 'returns false' do
         gameboard.instance_variable_get(:@board)[0] = [' |', ' |', ' |', 'X|', 'O|', 'X|', 'X|']
-        expect(gameboard.won_straight_line?).to be false
+        expect(gameboard.won_horizontal?).to be false
       end
     end
   end

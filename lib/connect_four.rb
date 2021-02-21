@@ -1,4 +1,3 @@
-require 'pry'
 require_relative 'gameboard'
 
 class ConnectFour
@@ -56,7 +55,7 @@ class ConnectFour
   end
 
   def won?
-    @gameboard.won_straight_line? || @gameboard.won_diagonal?
+    @gameboard.won_horizontal? || @gameboard.won_vertical? || @gameboard.won_diagonal?
   end
 
   def draw?
@@ -68,7 +67,7 @@ class ConnectFour
   end
 
   def winner
-    #the reverse of current_player or else congrats calls the next player, not the winner
+    # the reverse of current_player or else congrats calls the next player, not the winner
     turn_count.even? ? 'O|' : 'X|'
   end
 

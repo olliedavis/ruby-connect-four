@@ -49,11 +49,11 @@ class Gameboard
     full_row == 6
   end
 
-  def won_straight_line?
+  def won_horizontal?
     win_counter = 0
-    @board.each do |row|
-      row.each_with_index do |col, idx|
-        if col == 'X|' || col == 'O|' && col == col[idx + 1]
+    @board.reverse.each do |row|
+      row[0..3].each_with_index do |col, idx|
+        if ['X|', 'O|'].any?(col) && col == col[idx + 1]
           win_counter += 1
           return true if win_counter > 3
         else
@@ -67,7 +67,8 @@ class Gameboard
   def won_diagonal?
     @board[0..2].reverse.each_with_index do |row, row_idx|
       row[0..3].each_with_index do |col, col_idx|
-        if col == 'X|' || col == 'O|' && col == @board[row_idx][col_idx] && col == @board[row_idx + 1][col_idx + 1] && col == @board[row_idx + 2][col_idx + 2] && col == @board[row_idx + 3][col_idx + 3]
+        if ['X|',
+            'O|'].any?(col) && col == @board[row_idx + 1][col_idx + 1] && col == @board[row_idx + 2][col_idx + 2] && col == @board[row_idx + 3][col_idx + 3]
           return true
         else
           next
@@ -75,7 +76,8 @@ class Gameboard
       end
 
       row[3..6].each_with_index do |col, col_idx|
-        if col == 'X|' || col == 'O|' && col == @board[row_idx][col_idx] && col == @board[row_idx + 1][col_idx - 1] && col == @board[row_idx + 2][col_idx - 2] && col == @board[row_idx + 3][col_idx - 3]
+        if ['X|',
+            'O|'].any?(col) && col == @board[row_idx + 1][col_idx - 1] && col == @board[row_idx + 2][col_idx - 2] && col == @board[row_idx + 3][col_idx - 3]
           return true
         else
           next
@@ -85,7 +87,22 @@ class Gameboard
     false
   end
 
-  def won?
-    true if won_straight_line? == true || won_diagonal? == true
+  def won_vertical?
+    @board.reverse.each_with_index do |row, row_idx|
+      row.each_with_index do |col, col_idx|
+        begin
+          if col != ' |' && [
+            @board.reverse[row_idx][col_idx],
+            @board.reverse[row_idx + 1][col_idx],
+            @board.reverse[row_idx + 2][col_idx],
+            @board.reverse[row_idx + 3][col_idx]].all? { |token| token == col}
+            return true
+          end
+        rescue # returns exectured when starting row_idx is past the middle row of the board array
+          return false
+        end
+      end
+    end
+    false
   end
 end
