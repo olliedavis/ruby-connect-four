@@ -55,9 +55,7 @@ class Gameboard
     @board.reverse.each do |row|
       row.each_with_index do |col, idx|
         if @tokens.any?(col) && col == row[idx + 1]
-          puts win_counter
           win_counter += 1
-          puts win_counter
           return true if win_counter >= 3
         else
           win_counter = 0
@@ -68,22 +66,21 @@ class Gameboard
   end
 
   def won_diagonal?
-    @board[0..2].reverse.each_with_index do |row, row_idx|
-      row[0..3].each_with_index do |col, col_idx|
-        if ['X|',
-            'O|'].any?(col) && col == @board[row_idx + 1][col_idx + 1] && col == @board[row_idx + 2][col_idx + 2] && col == @board[row_idx + 3][col_idx + 3]
+    @board.reverse.each_with_index do |row, row_idx|
+      row.each_with_index do |col, col_idx|
+        if @tokens.any?(col) && [
+          @board.reverse[row_idx + 1][col_idx + 1],
+          @board.reverse[row_idx + 2][col_idx + 2],
+          @board.reverse[row_idx + 3][col_idx + 3]
+        ].all? { |token| token == col }
           return true
-        else
-          next
-        end
-      end
-
-      row[3..6].each_with_index do |col, col_idx|
-        if ['X|',
-            'O|'].any?(col) && col == @board[row_idx + 1][col_idx - 1] && col == @board[row_idx + 2][col_idx - 2] && col == @board[row_idx + 3][col_idx - 3]
+        # reverse diagonal
+        elsif @tokens.any?(col) && [
+          @board.reverse[row_idx + 1][col_idx - 1],
+          @board.reverse[row_idx + 2][col_idx - 2],
+          @board.reverse[row_idx + 3][col_idx - 3]
+        ].all? { |token| token == col }
           return true
-        else
-          next
         end
       end
     end
@@ -98,10 +95,11 @@ class Gameboard
             @board.reverse[row_idx][col_idx],
             @board.reverse[row_idx + 1][col_idx],
             @board.reverse[row_idx + 2][col_idx],
-            @board.reverse[row_idx + 3][col_idx]].all? { |token| token == col}
+            @board.reverse[row_idx + 3][col_idx]
+          ].all? { |token| token == col }
             return true
           end
-        rescue # returns exectured when starting row_idx is past the middle row of the board array
+        rescue StandardError # returns exectured when starting row_idx is past the middle row of the board array
           return false
         end
       end
