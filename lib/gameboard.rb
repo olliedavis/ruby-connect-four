@@ -68,19 +68,23 @@ class Gameboard
   def won_diagonal?
     @board.reverse.each_with_index do |row, row_idx|
       row.each_with_index do |col, col_idx|
-        if @tokens.any?(col) && [
-          @board.reverse[row_idx + 1][col_idx + 1],
-          @board.reverse[row_idx + 2][col_idx + 2],
-          @board.reverse[row_idx + 3][col_idx + 3]
-        ].all? { |token| token == col }
-          return true
-        # reverse diagonal
-        elsif @tokens.any?(col) && [
-          @board.reverse[row_idx + 1][col_idx - 1],
-          @board.reverse[row_idx + 2][col_idx - 2],
-          @board.reverse[row_idx + 3][col_idx - 3]
-        ].all? { |token| token == col }
-          return true
+        begin
+          if @tokens.any?(col) && [
+            @board.reverse[row_idx + 1][col_idx + 1],
+            @board.reverse[row_idx + 2][col_idx + 2],
+            @board.reverse[row_idx + 3][col_idx + 3]
+          ].all? { |token| token == col }
+            return true
+          # reverse diagonal
+          elsif @tokens.any?(col) && [
+            @board.reverse[row_idx + 1][col_idx - 1],
+            @board.reverse[row_idx + 2][col_idx - 2],
+            @board.reverse[row_idx + 3][col_idx - 3]
+          ].all? { |token| token == col }
+            return true
+          end
+        rescue StandardError # returns false when starting row_idx is past the middle row of the board array
+          return false
         end
       end
     end
@@ -99,7 +103,7 @@ class Gameboard
           ].all? { |token| token == col }
             return true
           end
-        rescue StandardError # returns exectured when starting row_idx is past the middle row of the board array
+        rescue StandardError # returns false when starting row_idx is past the middle row of the board array
           return false
         end
       end
