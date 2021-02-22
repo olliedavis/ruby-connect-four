@@ -28,7 +28,7 @@ describe Gameboard do
   end
 
   describe '#won_horizontal?' do
-    context 'when a straight line of four is made' do
+    context 'when a horizontal line of four is made' do
       before do
         board = gameboard.instance_variable_get(:@board)
         board[0] = 'O|', 'O|', 'O|', 'O|', 'X|', 'X|', 'X|'
@@ -40,9 +40,43 @@ describe Gameboard do
     end
 
     context 'when a straight line of four is not made' do
+      before do
+        board = gameboard.instance_variable_get(:@board)
+        board[0] = [' |', ' |', ' |', 'X|', 'O|', 'X|', 'X|']
+      end
+
       it 'returns false' do
-        gameboard.instance_variable_get(:@board)[0] = [' |', ' |', ' |', 'X|', 'O|', 'X|', 'X|']
         expect(gameboard.won_horizontal?).to be false
+      end
+    end
+  end
+
+  describe '#won_vertical?' do
+    context 'when a vertical line of four is made' do
+      before do
+        board = gameboard.instance_variable_get(:@board)
+        board[2] = ' |', ' |', ' |', 'O|', ' |', ' |', ' |'
+        board[3] = ' |', ' |', ' |', 'O|', ' |', ' |', ' |'
+        board[4] = ' |', ' |', ' |', 'O|', ' |', ' |', ' |'
+        board[5] = 'X|', 'X|', 'X|', 'O|', ' |', ' |', ' |'
+      end
+
+      it 'returns true' do
+        expect(gameboard.won_vertical?).to be true
+      end
+    end
+
+    context 'when a vertical line of four is not made' do
+      before do
+        board = gameboard.instance_variable_get(:@board)
+        board[2] = ' |', ' |', ' |', 'X|', ' |', ' |', ' |'
+        board[3] = ' |', ' |', ' |', 'O|', ' |', ' |', ' |'
+        board[4] = ' |', ' |', ' |', 'O|', ' |', ' |', ' |'
+        board[5] = 'X|', 'X|', 'O|', 'O|', ' |', ' |', ' |'
+      end
+
+      it 'returns false' do
+        expect(gameboard.won_vertical?).to be false
       end
     end
   end
@@ -77,7 +111,7 @@ describe Gameboard do
     end
 
     context 'when no diagonal line of four is made' do
-      it 'returns nil' do
+      it 'returns false' do
         expect(gameboard.won_diagonal?).to be false
       end
     end

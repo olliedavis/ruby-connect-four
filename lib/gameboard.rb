@@ -25,6 +25,7 @@ class Gameboard
     position[column] = player
   end
 
+  # returns the lowest row that is not already taken
   def counter_drop_position(column)
     case ' |'
     when @board[5][column]
@@ -65,6 +66,26 @@ class Gameboard
     false
   end
 
+  def won_vertical?
+    @board.reverse.each_with_index do |row, row_idx|
+      row.each_with_index do |col, col_idx|
+        begin
+          if col != ' |' && [
+            @board.reverse[row_idx][col_idx],
+            @board.reverse[row_idx + 1][col_idx],
+            @board.reverse[row_idx + 2][col_idx],
+            @board.reverse[row_idx + 3][col_idx]
+          ].all? { |token| token == col }
+            return true
+          end
+        rescue StandardError # returns false when starting row_idx is past the middle row of the board array
+          return false
+        end
+      end
+    end
+    false
+  end
+
   def won_diagonal?
     @board.reverse.each_with_index do |row, row_idx|
       row.each_with_index do |col, col_idx|
@@ -80,26 +101,6 @@ class Gameboard
             @board.reverse[row_idx + 1][col_idx - 1],
             @board.reverse[row_idx + 2][col_idx - 2],
             @board.reverse[row_idx + 3][col_idx - 3]
-          ].all? { |token| token == col }
-            return true
-          end
-        rescue StandardError # returns false when starting row_idx is past the middle row of the board array
-          return false
-        end
-      end
-    end
-    false
-  end
-
-  def won_vertical?
-    @board.reverse.each_with_index do |row, row_idx|
-      row.each_with_index do |col, col_idx|
-        begin
-          if col != ' |' && [
-            @board.reverse[row_idx][col_idx],
-            @board.reverse[row_idx + 1][col_idx],
-            @board.reverse[row_idx + 2][col_idx],
-            @board.reverse[row_idx + 3][col_idx]
           ].all? { |token| token == col }
             return true
           end
