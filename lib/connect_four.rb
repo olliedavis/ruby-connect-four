@@ -6,6 +6,7 @@ class ConnectFour
   def initialize
     @gameboard = Gameboard.new
     @board = @gameboard.board
+    @save = SaveGame.new
   end
 
   def intro
@@ -39,17 +40,20 @@ class ConnectFour
     input
   end
 
-  def valid?(int)
-    case int
-    when 1..6
-      true
-    when 9
-      save
+  def save_load_game?(input)
+    case input
+    when 7
+      game_save
     when 8
-      load
+      load_game
     else
       false
     end
+  end
+
+  def valid?(int)
+    save_load_game?(int)
+    true if int.between?(0, 6)
   end
 
   def current_player
@@ -95,20 +99,18 @@ class ConnectFour
     gets.to_i == 1 ? game_start : exit
   end
 
-  def save
+  def game_save
     puts 'Please enter a name for your save file'
     save_name = gets.chomp
-    if Save.unique_file_name?(save_name)
-      puts "Game saved as '#{save_name}'"
-      Save.new(save_name, current_board, current_player)
-    else
-      puts 'Save Failed - Name already exists'
-      save
-    end
+    @save_game.game_save(save_name, @board, current_player)
+    # else
+    #   puts 'Save Failed - Name already exists'
+    #   game_save
+    # end
   end
 
-  def load
-    Load.new(current_board, current_player)
+  def game_load
+    Load.new
   end
 
   def load_save_variables(content)
@@ -121,7 +123,6 @@ class ConnectFour
     puts "Game loaded! Here's a reminder of where you left off"
     puts "Current Player: #{current_player} Current Board: #{@current_board}"
   end
-
 end
 
 def game_start
@@ -129,4 +130,4 @@ def game_start
   game.intro
 end
 
- # game_start
+game_start
