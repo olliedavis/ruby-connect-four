@@ -1,4 +1,7 @@
 require_relative 'gameboard'
+require_relative 'connect_four'
+require_relative 'save_game'
+require_relative 'load_game'
 
 class ConnectFour
   def initialize
@@ -38,7 +41,16 @@ class ConnectFour
   end
 
   def valid?(int)
-    int >= 0 && int <= 6 ? true : false
+    case int
+    when int >= 0 && int <= 6
+      true
+    when 9
+      save
+    when 8
+      load
+    else
+      false
+    end
   end
 
   def current_player
@@ -83,6 +95,34 @@ class ConnectFour
     puts 'Play Again? Enter 1 for Yes, or 2 for No'
     gets.to_i == 1 ? game_start : exit
   end
+
+  def save
+    puts 'Please enter a name for your save file'
+    save_name = gets.chomp
+    if Save.unique_file_name?(save_name)
+      puts "Game saved as '#{save_name}'"
+      Save.new(save_name, current_board, current_player)
+    else
+      puts 'Save Failed - Name already exists'
+      save
+    end
+  end
+
+  def load
+    Load.new(current_board, current_player)
+  end
+
+  def load_save_variables(content)
+    @board = content['current_board']
+    @current_player = content['current_player']
+    loaded
+  end
+
+  def loaded
+    puts "Game loaded! Here's a reminder of where you left off"
+    puts "Current Player: #{current_player} Current Board: #{@current_board}"
+  end
+
 end
 
 def game_start
@@ -90,4 +130,4 @@ def game_start
   game.intro
 end
 
-# game_start
+ game_start
