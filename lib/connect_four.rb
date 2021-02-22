@@ -1,5 +1,4 @@
 require_relative 'gameboard'
-require_relative 'connect_four'
 require_relative 'save_game'
 require_relative 'load_game'
 
@@ -42,7 +41,7 @@ class ConnectFour
 
   def valid?(int)
     case int
-    when int >= 0 && int <= 6
+    when 1..6
       true
     when 9
       save
@@ -130,4 +129,4 @@ def game_start
   game.intro
 end
 
- game_start
+ # game_start

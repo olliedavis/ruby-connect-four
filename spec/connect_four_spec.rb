@@ -37,7 +37,7 @@ describe ConnectFour do
 
     context 'when an invalid number is provided' do
       it 'returns false' do
-        expect(connectfour.valid?(9)).to be false
+        expect(connectfour.valid?(15)).to be false
       end
     end
   end
