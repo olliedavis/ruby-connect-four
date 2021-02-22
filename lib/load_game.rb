@@ -1,12 +1,8 @@
 require 'json'
 require_relative 'connect_four'
 
-class Load
-
-  def initialize(current_board, current_player)
-    @current_board = current_board
-    @current_player = current_player
-    @connect_four = ConnectFour
+class LoadGame
+  def initialize
     load_file
   end
 
