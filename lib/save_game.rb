@@ -3,8 +3,7 @@ require_relative 'gameboard'
 require_relative 'connect_four'
 
 class Save
-  attr_accessor :game_save, :self.unique_file_name?
-
+  
   def initialize(save_name, current_board, current_player)
     @save_name = save_name
     @current_board = current_board
@@ -13,7 +12,7 @@ class Save
     game_save(save_name)
   end
 
-  def self.unique_file_name?(save_name)
+  def unique_file_name?(save_name)
     saves = Dir.entries('../saves/')
     saves.each do |save|
       return true unless save == "#{save_name}.json"
