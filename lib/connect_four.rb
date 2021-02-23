@@ -41,16 +41,13 @@ class ConnectFour
   def save_load_valid?(input)
     case input
     when 0..6
-      true
+      return true
     when 7
       game_save
-      false
     when 8
       game_load
-      false
-    else
-      false
     end
+    false
   end
 
   def valid?(int)
@@ -132,7 +129,6 @@ class ConnectFour
 
     false
   end
-
 end
 
 def game_start
