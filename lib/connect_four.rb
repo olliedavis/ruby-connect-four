@@ -5,6 +5,7 @@ require_relative 'load_game'
 class ConnectFour
   def initialize
     @gameboard = Gameboard.new
+    @board = @gameboard.board
   end
 
   def intro
@@ -48,11 +49,6 @@ class ConnectFour
       game_load
     end
     false
-  end
-
-  def valid?(int)
-    save_load_game?(int)
-    true if int.between?(0, 6)
   end
 
   def current_player
@@ -136,4 +132,4 @@ def game_start
   game.intro
 end
 
-game_start
+#game_start
