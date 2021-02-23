@@ -13,12 +13,4 @@ class SaveGame
       file.puts self_json
     end
   end
-
-  def unique_file_name?(save_name)
-    saves = Dir.entries('../saves/')
-    saves.each do |save|
-      return true unless save == "#{save_name}.json"
-    end
-    false
-  end
 end

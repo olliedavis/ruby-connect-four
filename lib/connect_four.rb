@@ -5,11 +5,10 @@ require_relative 'load_game'
 class ConnectFour
   def initialize
     @gameboard = Gameboard.new
-    @board = @gameboard.board
   end
 
   def intro
-    puts 'Welcome to Connect Four. Please read the README if you are unsure how to play.'
+    puts 'Welcome to Connect Four. Feel free to press 8 at anytime to save, or 9 to load a previous save.'
     play
   end
 
@@ -32,19 +31,23 @@ class ConnectFour
     puts "Player #{char[0]}, please enter the number of the column of where you would like to drop your token"
     input = gets.to_i - 1
 
-    until valid?(input)
-      puts 'Invalid input, please enter the number of the column of where you would like to drop your token'
+    until save_load_valid?(input)
+      puts 'Please enter the number of the column of where you would like to drop your token'
       input = gets.to_i - 1
     end
     input
   end
 
-  def save_load_game?(input)
+  def save_load_valid?(input)
     case input
+    when 0..6
+      true
     when 7
       game_save
+      false
     when 8
       game_load
+      false
     else
       false
     end
@@ -101,11 +104,14 @@ class ConnectFour
   def game_save
     puts 'Please enter a name for your save file'
     save_name = gets.chomp
-    SaveGame.new(save_name, @gameboard.board)
-    # else
-    #   puts 'Save Failed - Name already exists'
-    #   game_save
-    # end
+    if unique_file_name?(save_name)
+      SaveGame.new(save_name, @gameboard.board)
+      puts 'Game saved successfully!'
+      play
+    else
+      puts 'Save Failed - Name already exists'
+      game_save
+    end
   end
 
   def game_load
@@ -119,6 +125,14 @@ class ConnectFour
     puts "Current Player: #{current_player} Current Board:"
     play
   end
+
+  def unique_file_name?(save_name)
+    saves = Dir.entries('../saves/')
+    return true if saves.all? { |save| save != "#{save_name}.json" }
+
+    false
+  end
+
 end
 
 def game_start
