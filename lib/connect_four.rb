@@ -122,9 +122,9 @@ class ConnectFour
   def unique_file_name?(save_name)
     saves = Dir.entries('../saves/')
     return true if saves.all? { |save| save != "#{save_name}.json" }
+
     return false
   end
-    
 end
 
 def game_start
@@ -132,4 +132,4 @@ def game_start
   game.intro
 end
 
-# game_start
+game_start
