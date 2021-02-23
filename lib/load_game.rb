@@ -1,10 +1,6 @@
 require 'json'
 
 class LoadGame
-  def initialize
-    load_file
-  end
-
   def load_file
     puts 'Which one is the name of your save file?'
     begin
