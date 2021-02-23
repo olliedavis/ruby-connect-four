@@ -1,5 +1,4 @@
 require 'json'
-# require_relative 'connect_four'
 
 class LoadGame
   def initialize

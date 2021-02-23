@@ -1,5 +1,4 @@
 require 'json'
-require_relative 'gameboard'
 
 class SaveGame
   def initialize(save_name, current_board)

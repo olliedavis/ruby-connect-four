@@ -62,7 +62,7 @@ class ConnectFour
   # iterates through each slot and checks if taken
   def turn_count
     taken = 0
-    @board.each do |row|
+    @gameboard.board.each do |row|
       row.each do |slot|
         taken += 1 if ['X|', 'O|'].include?(slot)
       end
@@ -117,7 +117,7 @@ class ConnectFour
   def loaded
     puts "Game loaded! Here's a reminder of where you left off"
     puts "Current Player: #{current_player} Current Board:"
-    @gameboard.current_board
+    play
   end
 end
 
