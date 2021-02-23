@@ -1,7 +1,7 @@
 require 'json'
 
 class LoadGame
-  
+
   def load_file
     puts 'Which file is the name of your save?'
     retrieve_files
@@ -19,17 +19,4 @@ class LoadGame
       puts File.basename(save_file, '.json') unless save_file =~ /^..?$/
     end
   end
-end
-
-
-def load_file
-  puts 'Which file is the name of your save?'
-  retrieve_files
-  user_save.gets.chomp
-  until user_save == File.read("../saves/#{user_save}.json")
-    puts 'File not found, try again'
-    load_file
-  end
-  save = File.read("../saves/#{user_save}.json")
-  JSON.parse(save)
 end
