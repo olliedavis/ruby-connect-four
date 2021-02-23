@@ -6,7 +6,6 @@ class ConnectFour
   def initialize
     @gameboard = Gameboard.new
     @board = @gameboard.board
-    @save = SaveGame.new
   end
 
   def intro
@@ -45,7 +44,7 @@ class ConnectFour
     when 7
       game_save
     when 8
-      load_game
+      game_load
     else
       false
     end
@@ -102,7 +101,7 @@ class ConnectFour
   def game_save
     puts 'Please enter a name for your save file'
     save_name = gets.chomp
-    @save_game.game_save(save_name, @board, current_player)
+    SaveGame.new(save_name, current_player)
     # else
     #   puts 'Save Failed - Name already exists'
     #   game_save
@@ -110,7 +109,7 @@ class ConnectFour
   end
 
   def game_load
-    Load.new
+    LoadGame.new
   end
 
   def load_save_variables(content)
