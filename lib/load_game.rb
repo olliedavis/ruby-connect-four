@@ -19,6 +19,4 @@ class LoadGame
       puts File.basename(save_file, '.json') unless save_file =~ /^..?$/
     end
   end
-
 end
-
