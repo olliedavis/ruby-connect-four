@@ -1,5 +1,7 @@
+require 'time'
 require_relative '../lib/connect_four'
 require_relative '../lib/gameboard'
+require_relative '../lib/save_game'
 
 describe ConnectFour do
   subject(:connectfour) { described_class.new }
@@ -11,7 +13,7 @@ describe ConnectFour do
       end
 
       it 'validates and returns correct index' do
-        result = connectfour.player_input('|O')
+        result = connectfour.player_input('O|')
         expect(result).to eq(3)
       end
     end
@@ -28,16 +30,16 @@ describe ConnectFour do
     end
   end
 
-  describe '#valid?' do
+  describe '#save_load_valid?' do
     context 'when a valid number is provided' do
       it 'returns true' do
-        expect(connectfour.valid?(4)).to be true
+        expect(connectfour.save_load_valid?(4)).to be true
       end
     end
 
     context 'when an invalid number is provided' do
       it 'returns false' do
-        expect(connectfour.valid?(15)).to be false
+        expect(connectfour.save_load_valid?(15)).to be false
       end
     end
   end
@@ -54,6 +56,23 @@ describe ConnectFour do
       it 'returns circle' do
         connectfour.instance_variable_get(:@board)[5] = [' |', ' |', ' |', 'X|', ' |', ' |', ' |']
         expect(connectfour.current_player).to eq('O|')
+      end
+    end
+  end
+
+  describe '#unique_file_name?' do
+    context 'when a unique file name is given' do
+      it 'returns true' do
+        expect(connectfour.unique_file_name?(Time.now)).to be true
+      end
+    end
+    context 'when a non unique file name is given' do
+      before do
+        SaveGame.new('not-unique', Gameboard.new.board)
+      end
+
+      it 'returns false' do        
+        expect(connectfour.unique_file_name?('not-unique')).to be false
       end
     end
   end
