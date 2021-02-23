@@ -101,7 +101,7 @@ class ConnectFour
   def game_save
     puts 'Please enter a name for your save file'
     save_name = gets.chomp
-    SaveGame.new(save_name, current_player)
+    SaveGame.new(save_name, @gameboard.board)
     # else
     #   puts 'Save Failed - Name already exists'
     #   game_save
@@ -109,18 +109,15 @@ class ConnectFour
   end
 
   def game_load
-    LoadGame.new
-  end
-
-  def load_save_variables(content)
-    @board = content['current_board']
-    @current_player = content['current_player']
+    content = LoadGame.new.load_file
+    @gameboard.board = content['current_board']
     loaded
   end
 
   def loaded
     puts "Game loaded! Here's a reminder of where you left off"
-    puts "Current Player: #{current_player} Current Board: #{@current_board}"
+    puts "Current Player: #{current_player} Current Board:"
+    @gameboard.current_board
   end
 end
 

@@ -2,18 +2,13 @@ require 'json'
 require_relative 'gameboard'
 
 class SaveGame
-  def initialize(save_name, current_player)
-    @save_name = save_name
-    @current_player = current_player
-    current_board = Gameboard.new.board
-    #@board = @gameboard.board
-    game_save(@save_name, current_player, current_board)
+  def initialize(save_name, current_board)
+    game_save(save_name, current_board)
   end
 
-  def game_save(save_name, current_player, current_board)
+  def game_save(save_name, current_board)
     self_json = {
-      current_board: current_board,
-      current_player: current_player
+      current_board: current_board
     }.to_json
     open("../saves/#{save_name}.json", 'a') do |file|
       file.puts self_json

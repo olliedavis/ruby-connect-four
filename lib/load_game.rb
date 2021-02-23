@@ -1,5 +1,5 @@
 require 'json'
-#require_relative 'connect_four'
+# require_relative 'connect_four'
 
 class LoadGame
   def initialize
@@ -15,8 +15,7 @@ class LoadGame
     rescue StandardError
       puts 'File not found. Going back to main menu.'
     end
-    content = JSON.parse(save)
-    load_save(content)
+    JSON.parse(save)
   end
 
   def retrieve_files
