@@ -71,7 +71,7 @@ describe ConnectFour do
         SaveGame.new('not-unique', Gameboard.new.board)
       end
 
-      it 'returns false' do        
+      it 'returns false' do
         expect(connectfour.unique_file_name?('not-unique')).to be false
       end
     end
